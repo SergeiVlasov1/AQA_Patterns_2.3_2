@@ -1,4 +1,4 @@
-package data;
+package ru.netology.data;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
