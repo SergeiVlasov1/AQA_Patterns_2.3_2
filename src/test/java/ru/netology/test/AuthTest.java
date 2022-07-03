@@ -3,8 +3,8 @@ package ru.netology.test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.netology.data.Auth;
-import ru.netology.data.DataGenerator;
+import data.Auth;
+import data.DataGenerator;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -55,6 +55,16 @@ public class AuthTest {
         registration(active.getLogin(), DataGenerator.getInvalidPassword());
         $(".notification__title").shouldHave(text("Ошибка")).shouldBe(visible);
         $(".notification__content").shouldHave(text("Ошибка! Неверно указан логин или пароль")).shouldBe(visible);
+    }
+
+    @Test
+    @DisplayName("Should get error message if login with blocked registered user")
+    public void shouldGetErrorIfBlockedUser() {
+
+        Auth.createUser(blocked);
+        registration(blocked.getLogin(), blocked.getPassword());
+        $(".notification__title").shouldHave(text("Ошибка")).shouldBe(visible);
+        $(".notification__content").shouldHave(text("Ошибка! Пользователь заблокирован")).shouldBe(visible);
     }
 
     @Test
